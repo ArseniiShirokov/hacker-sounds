@@ -24,6 +24,26 @@ let music_started = false;
 const stat_period_duration = 5 * 1000;
 const weighted_coef = 0.6;
 
+//The variable below will just make it so the user cannot run the setInterval method more than once at a time
+var isSetTimmeoutRunning = false;
+//TODO
+var interval = setInterval(function(){}, 10000000000);
+
+function startBackground(){
+  //We set this variable to true when we first run the setInterval method.
+  //It will get set back to false when the user clicks the stop button
+  isSetTimmeoutRunning = true;
+  interval = setInterval(function(){
+    listener.adjust_speed();
+  }, 1000);
+}
+
+//Our function to clear the setInterval() method above
+function stopBackground(){
+  clearInterval(interval);
+  isSetTimmeoutRunning = false;
+}
+
 export function activate(context: vscode.ExtensionContext) {
     console.log('Initializing "hacker-sounds" extension');
 
@@ -35,6 +55,7 @@ export function activate(context: vscode.ExtensionContext) {
 
     // to avoid multiple different instances
     listener = listener || new EditorListener(player);
+    startBackground();
 
     vscode.commands.registerCommand('hacker_sounds.enable', () => {
         if (!isActive) {
@@ -49,6 +70,7 @@ export function activate(context: vscode.ExtensionContext) {
         if (isActive) {
             context.globalState.update('hacker_sounds', false);
             isActive = false;
+            stopBackground();
             vscode.window.showInformationMessage('Hacker Sounds extension disabled');
         } else {
             vscode.window.showWarningMessage('Hacker Sounds extension is already disabled');
