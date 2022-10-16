@@ -21,9 +21,9 @@ let mpv = require('node-mpv');
 let mpvPlayer = new mpv();
 
 const stat_period_duration = 5 * 1000;
+const weighted_coef = 0.6;
 
 export function activate(context: vscode.ExtensionContext) {
-    start = Date.now();
     console.log('Initializing "hacker-sounds" extension');
 
     // is the extension activated? yes by default.
@@ -241,6 +241,7 @@ export class EditorListener {
     private _disposable: vscode.Disposable;
     private _subscriptions: vscode.Disposable[] = [];
     private _basePath: string = path.join(__dirname, '..');
+    private _average_temp = 20;
 
     constructor(private player: any) {
         isNotArrowKey = false;
@@ -254,11 +255,11 @@ export class EditorListener {
     }
 
     map_temp_to_interval(temp: number) {
-        if (temp < 20) {
+        if (temp < 10) {
             return 0.75
-        } else if (temp < 30) {
+        } else if (temp < 20) {
             return 1;
-        } else if (temp < 40) {
+        } else if (temp < 25) {
             return 1.25;
         } else {
             return 1.5;
@@ -269,18 +270,21 @@ export class EditorListener {
         if (!this._music_started) {
             this._music_started = true;
             mpvPlayer.load("https://soundcloud.com/90sflav/callme?in=user-692461400/sets/lofi");
+            start = Date.now();
         }
         // Check of starting new stat period
         let new_period = Math.round((Date.now() - start) / stat_period_duration);
 
         if (new_period != this._current_period) {
-            let scale = this.map_temp_to_interval(this._current_temp);
-            console.log("Temp " + this._current_temp);
+            let scale = this.map_temp_to_interval(this._average_temp);
+            console.log("Temp " + this._average_temp);
+            console.log("Temp cur " + this._current_temp);
             console.log("Scale" + scale);
             console.log("    ");
             mpvPlayer.speed(scale);
             this._current_period = new_period;
-            this._current_temp = 0
+            this._average_temp = Math.round(weighted_coef * this._average_temp + (1 - weighted_coef) * this._current_temp);
+            this._current_temp = 0; 
         } else {
             this._current_temp = this._current_temp + 1;
         }
