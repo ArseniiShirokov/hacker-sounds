@@ -22,7 +22,7 @@ let mpvPlayer = new mpv();
 let music_started = false;
 
 const stat_period_duration = 5 * 1000;
-const weighted_coef = 0.6;
+const weighted_coef = 0.4;
 
 //The variable below will just make it so the user cannot run the setInterval method more than once at a time
 var isSetTimmeoutRunning = false;

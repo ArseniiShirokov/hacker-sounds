@@ -57,10 +57,18 @@ You can adjust the volume of the sounds by executing these commands in the Comma
 - `Ritmica: Volume Up`
 - `Ritmica: Volume Down`
 - `Ritmica: Set Volume`
-- `Ritmica: Stop music`
-- `Ritmica: Run music`
 
 **NOTE:** The volume adjustments only apply to this extension's sounds. It does not affect the system volume.
+
+### Music control
+
+You can play music by executing these commands in the Command Palette (Cmd+Shift+P) and give link to your playlist:
+
+- `Ritmica: Run music`
+
+You can stop music by executing these commands in the Command Palette (Cmd+Shift+P):
+
+- `Ritmica: Stop music`
 
 ## Known Issues & Bugs
 
