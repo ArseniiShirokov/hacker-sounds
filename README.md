@@ -5,9 +5,7 @@
 [![Visual Studio Marketplace](https://img.shields.io/vscode-marketplace/r/danjiii.ritmica.svg)](https://marketplace.visualstudio.com/items?itemName=danjiii.ritmica)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/jengjeng/aural-coding-vscode/blob/master/LICENSE)
 
-This Visual Studio Code extension increase concentration during coding. 
-
-Boost your productivity with Ritmika. The IDE plugin changes the speed of the music according to your typing speed. This helps you maintain concentration and get into flow state. Try it and become a code hero with Ritmica!
+This Visual Studio Code extension increase concentration during coding. Boost your productivity with Ritmika. The IDE plugin changes the speed of the music according to your typing speed. This helps you maintain concentration and get into flow state. Try it and become a code hero with Ritmica!
 
 ## Requirements
 
@@ -16,11 +14,13 @@ Boost your productivity with Ritmika. The IDE plugin changes the speed of the mu
 On Linux, you will need to have mplayer installed and on your PATH to get this extension working.
 
 ```npm install ```
+
 ```sudo apt-get install mpv youtube-dl```
 
 **Debian based**
 
 ```npm install ```
+
 ```sudo apt-get install mpv youtube-dl```
 
 **Red Hat based**
@@ -74,7 +74,3 @@ Any pull request is welcome.
 
 For Windows, this extension uses the `sounder` light-weight player:
 <https://www.elifulkerson.com/projects/commandline-wav-player.php>
-
------------------------------------------------------------------------------------------------------------
-
-**Hack the world!**
