@@ -50,6 +50,14 @@
                 "command": "hacker_sounds.setVolume",
                 "title": "Hacker Sounds: Set Volume",
                 "args": "newVol"
+            },
+            {
+                "command": "hacker_sounds.run",
+                "title": "Hacker Sounds: run music"
+            },
+            {
+                "command": "hacker_sounds.stop",
+                "title": "Hacker Sounds: stop music"
             }
         ]
     },

@@ -19,6 +19,7 @@ let config: PlayerConfig = {
 let start: number;
 let mpv = require('node-mpv');
 let mpvPlayer = new mpv();
+let music_started = false;
 
 const stat_period_duration = 5 * 1000;
 const weighted_coef = 0.6;
@@ -53,6 +54,24 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.window.showWarningMessage('Hacker Sounds extension is already disabled');
         }
     });
+
+    vscode.commands.registerCommand('hacker_sounds.run', () => {
+        if (isActive) {
+            music_started = true;
+            mpvPlayer.load("https://soundcloud.com/90sflav/callme?in=user-692461400/sets/lofi");
+            start = Date.now();  
+            vscode.window.showWarningMessage('Music is started');
+        }
+    });
+
+    vscode.commands.registerCommand('hacker_sounds.stop', () => {
+        if (isActive) {
+            music_started = false;
+            mpvPlayer.stop();
+            vscode.window.showWarningMessage('Music is stoped');
+        }
+    });
+
     vscode.commands.registerCommand('hacker_sounds.volumeUp', () => {
         let newVol = null;
         switch (process.platform) {
@@ -267,11 +286,6 @@ export class EditorListener {
     }
 
     adjust_speed() {
-        if (!this._music_started) {
-            this._music_started = true;
-            mpvPlayer.load("https://soundcloud.com/90sflav/callme?in=user-692461400/sets/lofi");
-            start = Date.now();
-        }
         // Check of starting new stat period
         let new_period = Math.round((Date.now() - start) / stat_period_duration);
 
