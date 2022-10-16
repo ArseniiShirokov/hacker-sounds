@@ -27,7 +27,7 @@ const weighted_coef = 0.6;
 //The variable below will just make it so the user cannot run the setInterval method more than once at a time
 var isSetTimmeoutRunning = false;
 //TODO
-var interval = setInterval(function(){}, 10000000000);
+var interval = setInterval(function(){}, 1000);
 
 function startBackground(){
   //We set this variable to true when we first run the setInterval method.
@@ -55,7 +55,6 @@ export function activate(context: vscode.ExtensionContext) {
 
     // to avoid multiple different instances
     listener = listener || new EditorListener(player);
-    startBackground();
 
     vscode.commands.registerCommand('hacker_sounds.enable', () => {
         if (!isActive) {
@@ -77,12 +76,15 @@ export function activate(context: vscode.ExtensionContext) {
         }
     });
 
-    vscode.commands.registerCommand('hacker_sounds.run', () => {
+    vscode.commands.registerCommand('hacker_sounds.run', async () => {
         if (isActive) {
             music_started = true;
-            mpvPlayer.load("https://soundcloud.com/90sflav/callme?in=user-692461400/sets/lofi");
+            let input = await vscode.window.showInputBox();
+            mpvPlayer.loadStream(input);
             start = Date.now();  
+            startBackground();
             vscode.window.showWarningMessage('Music is started');
+            console.log("music is started");
         }
     });
 
